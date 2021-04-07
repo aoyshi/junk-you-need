@@ -10,7 +10,7 @@ spec:
     - host: junkyouneed.com
       http:
         paths:
-          - path: /api/users/currentuser
+          - path: /api/users/?(.*)
             backend:
               serviceName: auth-srv
               servicePort: 3000
