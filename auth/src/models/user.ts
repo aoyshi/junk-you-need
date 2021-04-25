@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 
+import { Password } from '../services/password';
+
 // describes attributes to create new User (only props added by dev, not by mongoose)
 interface UserAttrs {
   email: string;
@@ -34,6 +36,15 @@ const userSchema = new mongoose.Schema({
 userSchema.statics.build = (attrs: UserAttrs) => {
   return new User(attrs);
 };
+
+// Hash password before saving to DB
+userSchema.pre('save', async function (done) {
+  if (this.isModified('password')) {
+    const hashedPassword = await Password.toHash(this.get('password'));
+    this.set('password', hashedPassword);
+  }
+  done();
+});
 
 const User = mongoose.model<UserDoc, UserModel>('User', userSchema);
 
