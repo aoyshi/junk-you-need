@@ -39,10 +39,10 @@ router.post(
         id: user.id,
         email: user.email,
       },
-      'jwtsecretkey'
+      process.env.JWT_KEY!
     );
 
-    // Store JWT in cookie
+    // Store JWT in session cookie
     req.session = {
       jwt: userJwt,
     };
