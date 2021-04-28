@@ -1,5 +1,4 @@
 import { scrypt, randomBytes } from 'crypto';
-import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';
 import { promisify } from 'util';
 
 const scryptAsync = promisify(scrypt);
