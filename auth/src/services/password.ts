@@ -1,4 +1,5 @@
 import { scrypt, randomBytes } from 'crypto';
+import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';
 import { promisify } from 'util';
 
 const scryptAsync = promisify(scrypt);
@@ -14,6 +15,10 @@ export class Password {
   static async compare(suppliedPassword: string, storedPassword: string) {
     const [hashedPassword, salt] = storedPassword.split('.');
     const buffer = (await scryptAsync(suppliedPassword, salt, 64)) as Buffer;
+
+    console.log(buffer.toString('hex'));
+    console.log(hashedPassword);
+    console.log('---------');
 
     return buffer.toString('hex') === hashedPassword;
   }
