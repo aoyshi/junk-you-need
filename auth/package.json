@@ -20,8 +20,16 @@
     "@types/mongoose": "^5.10.4"
   },
   "scripts": {
-    "start": "ts-node-dev src/index.ts"
+    "start": "ts-node-dev src/index.ts",
+    "test": "jest --watchAll --no-cache"
   },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "setupFilesAfterEnv": [
+      "./src/test/setup.ts"
+    ]
+  }
   "keywords": [],
   "author": "",
   "license": "ISC"
