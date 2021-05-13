@@ -7,8 +7,7 @@ import { signUpRouter } from './routes/signup';
 import { signInRouter } from './routes/signin';
 import { signOutRouter } from './routes/signout';
 
-import { errorHandler } from './middleware/error-handler';
-import { NotFoundError } from './errors/not-found-error';
+import { errorHandler, NotFoundError } from '@junkyouneed/common';
 
 const app = express();
 app.set('trust proxy', true); // trust ingress-nginx proxying traffic to express
