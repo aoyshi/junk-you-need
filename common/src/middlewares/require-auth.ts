@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from 'express';
-
 import { NotAuthorizedError } from '../errors/not-authorized-error';
 
 export const requireAuth = (
@@ -10,5 +9,6 @@ export const requireAuth = (
   if (!req.currentUser) {
     throw new NotAuthorizedError();
   }
+
   next();
 };
