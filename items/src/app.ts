@@ -4,6 +4,8 @@ import cookieSession from 'cookie-session';
 
 import { errorHandler, NotFoundError, currentUser } from '@junkyouneed/common';
 import { createItemRouter } from './routes/new';
+import { showItemRouter } from './routes/show';
+import { indexItemRouter } from './routes/index';
 
 const app = express();
 app.set('trust proxy', true); // trust ingress-nginx proxying traffic to express
@@ -17,6 +19,8 @@ app.use(
 app.use(currentUser); //get logged in user (if any)
 
 app.use(createItemRouter);
+app.use(showItemRouter);
+app.use(indexItemRouter);
 
 app.all('*', async () => {
   throw new NotFoundError();

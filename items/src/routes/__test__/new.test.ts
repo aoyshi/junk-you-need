@@ -3,19 +3,19 @@ import { app } from '../../app';
 import { Item } from '../../models/item';
 
 it('has a route handler listening to /api/items for POST requests', async () => {
-  const response = await request(app).post('/api/items').send({});
+  const response = await request(app).post('/api/items').send();
   expect(response.status).not.toEqual(404);
 });
 
 it('disallows access if user not signed in', async () => {
-  await request(app).post('/api/items').send({}).expect(401);
+  await request(app).post('/api/items').send().expect(401);
 });
 
 it('allows access if user is signed in', async () => {
   const response = await request(app)
     .post('/api/items')
     .set('Cookie', global.signin())
-    .send({});
+    .send();
   expect(response.status).not.toEqual(401);
 });
 
