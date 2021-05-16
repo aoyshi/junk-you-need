@@ -10,7 +10,7 @@ router.post(
   requireAuth,
   currentUser,
   [
-    body('title').trim().notEmpty().withMessage('Item must be present'),
+    body('title').trim().notEmpty().withMessage('Title must be present'),
     body('price')
       .trim()
       .notEmpty()
