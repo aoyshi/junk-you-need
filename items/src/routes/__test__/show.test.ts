@@ -3,7 +3,7 @@ import request from 'supertest';
 import { app } from '../../app';
 
 it('returns 404 if item not found', async () => {
-  const id = mongoose.Types.ObjectId().toHexString();
+  const id = new mongoose.Types.ObjectId().toHexString();
   await request(app)
     .get(`/api/items/${id}`)
     .set('Cookie', global.signin())
