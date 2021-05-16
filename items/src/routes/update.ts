@@ -1,4 +1,10 @@
-import { currentUser, requireAuth, validateRequest } from '@junkyouneed/common';
+import {
+  currentUser,
+  NotAuthorizedError,
+  NotFoundError,
+  requireAuth,
+  validateRequest,
+} from '@junkyouneed/common';
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import { Item } from '../models/item';
@@ -6,7 +12,7 @@ import { Item } from '../models/item';
 const router = express.Router();
 
 router.post(
-  '/api/items',
+  '/api/items/:id',
   requireAuth,
   currentUser,
   [
@@ -19,11 +25,20 @@ router.post(
   ],
   validateRequest,
   async (req: Request, res: Response) => {
+    const item = await Item.findById(req.params.id);
+    if (!item) {
+      throw new NotFoundError();
+    }
+    if (item.userId !== req.currentUser!.id) {
+      throw new NotAuthorizedError();
+    }
+
     const { title, price } = req.body;
-    const item = Item.build({ title, price, userId: req.currentUser!.id });
+    item.set({ title, price });
     await item.save();
-    res.status(201).send(item);
+
+    res.status(200).send(item);
   }
 );
 
-export { router as createItemRouter };
+export { router as updateItemRouter };
