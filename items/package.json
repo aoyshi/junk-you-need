@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "@junkyouneed/common": "0.0.6",
+    "@junkyouneed/common": "0.0.7",
     "@types/cookie-session": "^2.0.42",
     "@types/express": "^4.17.11",
     "@types/jsonwebtoken": "^8.5.1",
