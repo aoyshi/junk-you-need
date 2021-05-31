@@ -9,6 +9,9 @@ import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import { Item } from '../models/item';
 
+import { natsWrapper } from '../nats-wrapper';
+import { ItemUpdatedPublisher } from '../events/publishers/item-updated-publisher';
+
 const router = express.Router();
 
 router.post(
@@ -36,6 +39,13 @@ router.post(
     const { title, price } = req.body;
     item.set({ title, price });
     await item.save();
+
+    await new ItemUpdatedPublisher(natsWrapper.client).publish({
+      id: item.id,
+      title: item.title,
+      price: item.price,
+      userId: item.userId,
+    });
 
     res.status(200).send(item);
   }

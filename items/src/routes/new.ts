@@ -1,7 +1,7 @@
 import { currentUser, requireAuth, validateRequest } from '@junkyouneed/common';
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
-import { ItemCreatedPublisher } from '../events/item-created-publisher';
+import { ItemCreatedPublisher } from '../events/publishers/item-created-publisher';
 import { Item } from '../models/item';
 import { natsWrapper } from '../nats-wrapper';
 
