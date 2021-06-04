@@ -1,9 +1,8 @@
-import request from 'supertest';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 
-import { app } from '../app';
+jest.mock('../nats-wrapper');
 
 let mongo: any;
 // Set up instance of mongodb in memory before tests run, and hook up mongoose to it
@@ -21,6 +20,7 @@ beforeAll(async () => {
 
 // Refresh in-memory DB between tests
 beforeEach(async () => {
+  jest.clearAllMocks();
   const collections = await mongoose.connection.db.collections();
 
   for (let collection of collections) {
